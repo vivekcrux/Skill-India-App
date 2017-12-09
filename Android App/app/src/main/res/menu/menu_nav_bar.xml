@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item
+            android:id="@+id/about"
+            android:title="@string/about"
+            android:icon="@drawable/ic_info_outline_black_24dp" />
+
+        <item
+            android:id="@+id/contribute"
+            android:title="@string/contribute"
+            android:icon="@drawable/ic_contribute" />
+
+        <item
+            android:id="@+id/gallery"
+            android:title="@string/gallery"
+            android:icon="@drawable/ic_gallery_black_24dp" />
+
+        <item
+            android:id="@+id/locate"
+            android:title="@string/locate"
+            android:icon="@drawable/ic_location_city_black_24dp" />
+
+        <item
+            android:id="@+id/login"
+            android:title="@string/login"
+            android:icon="@drawable/user" />
+
+        <item
+            android:id="@+id/business"
+            android:title="@string/business">
+
+            <menu>
+
+                <item
+                    android:id="@+id/tender"
+                    android:title="@string/tender"
+                    android:icon="@drawable/ic_tender_black_24dp" />
+
+            </menu>
+
+        </item>
+
+        <item
+            android:id="@+id/communication"
+            android:title="@string/communication">
+
+            <menu>
+
+                <item
+                    android:id="@+id/contact"
+                    android:title="@string/contact"
+                    android:icon="@drawable/ic_phone_black_24dp" />
+
+                <item
+                    android:id="@+id/feedback"
+                    android:title="@string/feedback"
+                    android:icon="@drawable/ic_feedback_black_24dp" />
+
+                <item
+                    android:id="@+id/share"
+                    android:title="@string/share"
+                    android:icon="@drawable/ic_share_black_24dp" />
+
+            </menu>
+
+        </item>
+
+</menu>

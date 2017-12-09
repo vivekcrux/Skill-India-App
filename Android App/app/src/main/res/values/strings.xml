@@ -1,0 +1,43 @@
+<resources>
+
+    <string name="app_name">Skill India</string>
+    <string name="title_activity_app_hall">AppHallActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_panel">Panel</string>
+
+    <!-- NavBar Header Strings -->
+    <string name="profile_photo_desc">Profile photo of the logged in User</string>
+    <string name="name_sample">Unsigned User</string>
+    <string name="email_sample">user@usermail.com</string>
+
+    <!-- Menu Strings -->
+    <string name="about">About App</string>
+    <string name="contribute">Contribute</string>
+    <string name="gallery">Gallery</string>
+    <string name="locate">Locate Centre</string>
+    <string name="login">Login/Register</string>
+    <string name="tender">Tender</string>
+    <string name="contact">Contact Us</string>
+    <string name="feedback">Send Feedback</string>
+    <string name="share">Share</string>
+    <string name="business">Business</string>
+    <string name="communication">Communication</string>
+
+
+    <!--Player and About Content-->
+    <string name="about_us_content">Skill India is a campaign launched by Prime Minister Narendra Damodardas Modi on 15 July 2015 which aim to train over 40 crore (400 million) people in India in different skills by 2022. It includes various initiatives of the government like "National Skill Development Mission", "National Policy for Skill Development and Entrepreneurship, 2015", "Pradhan Mantri Kaushal Vikas Yojana (PMKVY)" and the "Skill Loan scheme".</string>
+    <string name="title_logo">CHALO KAAM KAREIN</string>
+    <string name="btn_skip_intro">Skip Intro</string>
+    <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
+    <string name="image_people">Placeholder supporting image in about page for when app is without internet.</string>
+
+    <!-- Misc Strings -->
+    <string name="app_address">https://play.google.com/store/apps/details?id=co.ardulous.skillindia</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
