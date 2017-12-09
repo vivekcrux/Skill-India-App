@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class PanelActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -112,9 +116,21 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
 
     @Override
     public void onBackPressed() {
+
         if(drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawer(GravityCompat.START);
-        else
-            super.onBackPressed();
+        else {
+
+            final Snackbar snackBar = Snackbar.make(findViewById(R.id.coordinatorView), "Do you wish to exit?", Snackbar.LENGTH_LONG);
+
+            snackBar.setAction("OK", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            snackBar.show();
+        }
+
     }
 }
