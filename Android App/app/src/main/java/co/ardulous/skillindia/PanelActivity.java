@@ -65,6 +65,7 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
                 break;
 
             case R.id.login:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragContainer, new AccountsFragment()).commit();
                 break;
 
             case R.id.tender:
