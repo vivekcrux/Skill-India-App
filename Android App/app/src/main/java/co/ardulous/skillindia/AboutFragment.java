@@ -30,7 +30,7 @@ public class AboutFragment extends Fragment {
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = null;
-        if(connectivityManager != null)
+        if (connectivityManager != null)
             networkInfo = connectivityManager.getActiveNetworkInfo();
 
         if (networkInfo != null) {

@@ -33,6 +33,6 @@ public class MainActivity extends AppCompatActivity {
                 };
                 delayLoad.run();
             }
-        }, 3*1000);
+        }, 3 * 1000);
     }
 }

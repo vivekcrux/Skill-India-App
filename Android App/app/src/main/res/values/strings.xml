@@ -26,7 +26,7 @@
     <string name="share">Share</string>
     <string name="business">Business</string>
     <string name="communication">Communication</string>
-
+    <string name="home">Home</string>
 
     <!--Player and About Content-->
     <string name="about_us_content">Skill India is a campaign launched by Prime Minister Narendra Damodardas Modi on 15 July 2015 which aim to train over 40 crore (400 million) people in India in different skills by 2022. It includes various initiatives of the government like "National Skill Development Mission", "National Policy for Skill Development and Entrepreneurship, 2015", "Pradhan Mantri Kaushal Vikas Yojana (PMKVY)" and the "Skill Loan scheme".</string>
@@ -38,6 +38,26 @@
     <!-- Misc Strings -->
     <string name="app_address">https://play.google.com/store/apps/details?id=co.ardulous.skillindia</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Activity Titles-->
+    <string name="registerActivityName">Register-Skill India</string>
+
+    <!--Register Activity & Login Fragment Content-->
+    <string name="signup">Sign Up</string>
+    <string name="firstname">*First Name:</string>
+    <string name="firstnameInput">Your First Name Here</string>
+    <string name="lastname">*Last Name:</string>
+    <string name="lastnameInput">Your Last Name Here</string>
+    <string name="starredPhone">*Phone</string>
+    <string name="phoneInput">Your 10 digit phone number</string>
+    <string name="starredPassword">*Password:</string>
+    <string name="starredConfirmPassword">*Confirm Password:</string>
+    <string name="passwordInput">Your Password Here</string>
+    <string name="register">Register</string>
+    <string name="LogIn">Login</string>
+    <string name="googleSignIn">Sign In with Google</string>
+    <string name="forgotPassword">Forgot Password?</string>
+    <string name="password">Password</string>
+    <string name="phone">Phone</string>
+    <string name="signin">Sign In</string>
 </resources>

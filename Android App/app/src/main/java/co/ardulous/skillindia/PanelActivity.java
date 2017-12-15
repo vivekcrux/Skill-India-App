@@ -39,7 +39,7 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
         );
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
@@ -51,6 +51,9 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
 
+            case R.id.home:
+                //Handle for the main screen
+                break;
             case R.id.about:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragContainer, new AboutFragment()).commit();
                 break;
@@ -118,7 +121,7 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
     @Override
     public void onBackPressed() {
 
-        if(drawerLayout.isDrawerOpen(GravityCompat.START))
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawer(GravityCompat.START);
         else {
 
