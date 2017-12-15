@@ -24,6 +24,7 @@
         </activity>
         <activity
             android:name=".PanelActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegisterActivity"
