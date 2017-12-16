@@ -60,4 +60,8 @@
     <string name="password">Password</string>
     <string name="phone">Phone</string>
     <string name="signin">Sign In</string>
+
+    <!--InternetWarning-->
+    <string name="internet_warn">No Internet Connection!!</string>
+    <string name="retry">Retry</string>
 </resources>
