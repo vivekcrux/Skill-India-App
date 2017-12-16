@@ -22,6 +22,9 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
     DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
+    private int tapCount;
+    private long timeStamp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,8 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
         }
 
         ((NavigationView) findViewById(R.id.navView)).setNavigationItemSelectedListener(this);
+
+        tapCount = 0;
     }
 
     @Override
@@ -67,7 +72,7 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
                 break;
 
             case R.id.login:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragContainer, new AccountsFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragContainer, new AccountFragment()).commit();
                 break;
 
             case R.id.tender:
@@ -119,21 +124,26 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
 
     @Override
     public void onBackPressed() {
-
         if(drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawer(GravityCompat.START);
-        else {
+        else if(tapCount == 0) {
+            final Snackbar snackBar = Snackbar.make(findViewById(R.id.coordinatorView), "Tap Again to Exit", Snackbar.LENGTH_LONG);
 
-            final Snackbar snackBar = Snackbar.make(findViewById(R.id.coordinatorView), "Do you wish to exit?", Snackbar.LENGTH_LONG);
-
-            snackBar.setAction("OK", new View.OnClickListener() {
+            snackBar.setAction("EXIT", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     finish();
                 }
             });
             snackBar.show();
-        }
 
+            tapCount++;
+            timeStamp = System.currentTimeMillis();
+        } else if(System.currentTimeMillis()-timeStamp <= 1000) {
+            super.onBackPressed();
+        } else {
+            tapCount = 0;
+            onBackPressed();
+        }
     }
 }
