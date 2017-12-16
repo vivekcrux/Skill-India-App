@@ -7,12 +7,10 @@
     android:orientation="vertical"
     tools:context="co.ardulous.skillindia.AccountsFragment">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:background="@drawable/border"
-        android:orientation="vertical">
+        android:background="@drawable/border">
 
         <LinearLayout
             android:id="@+id/internetWarn"
@@ -45,153 +43,128 @@
             android:id="@+id/signUpWidget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/signup"
+                android:textStyle="bold"
+                android:textSize="24sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="4dp">
+                android:padding="8dp">
 
-                <TextView
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:text="@string/signup"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="24sp" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@color/colorPrimary" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/firstname"
-                        android:textSize="16sp" />
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/firstName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:hint="@string/firstnameInput"
+                        android:hint="@string/firstname"
                         android:textColor="#616161"
                         android:textSize="16sp" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/lastname"
-                        android:textSize="16sp" />
+                </android.support.design.widget.TextInputLayout>
+
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/lastName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:hint="@string/lastnameInput"
+                        android:hint="@string/lastname"
                         android:textColor="#616161"
                         android:textSize="16sp" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/starredPhone"
-                        android:textSize="16sp" />
+                </android.support.design.widget.TextInputLayout>
+
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:hint="@string/phoneInput"
+                        android:hint="@string/starredPhone"
+                        android:textColor="#616161"
+                        android:inputType="phone"
+                        android:textSize="16sp" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="true">
+
+                    <EditText
+                        android:id="@+id/Password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:hint="@string/starredPassword"
+                        android:inputType="textPassword"
+                        android:textColor="#616161"
+                        android:textSize="16sp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="true">
+
+                    <EditText
+                        android:id="@+id/confirmPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_weight="1"
+                        android:hint="@string/starredConfirmPassword"
+                        android:inputType="textPassword"
                         android:textColor="#616161"
                         android:textSize="16sp" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/starredPassword"
-                        android:textSize="16sp" />
+                </android.support.design.widget.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:passwordToggleEnabled="true">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/Password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:backgroundTint="@color/colorPrimary"
-                            android:hint="@string/passwordInput"
-                            android:inputType="textPassword"
-                            android:textColor="#616161"
-                            android:textSize="16sp" />
-                    </android.support.design.widget.TextInputLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/starredConfirmPassword"
-                        android:textSize="16sp" />
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:passwordToggleEnabled="true">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/confirmPassword"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_weight="1"
-                            android:backgroundTint="@color/colorPrimary"
-                            android:hint="@string/passwordInput"
-                            android:inputType="textPassword"
-                            android:textColor="#616161"
-                            android:textSize="16sp" />
-                    </android.support.design.widget.TextInputLayout>
-                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <Button
+                android:id="@+id/register_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="16dp"
-                android:paddingLeft="16dp">
+                android:background="@color/colorAccent"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="@string/register"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/register_button"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/colorAccent"
-                    android:gravity="center_vertical"
-                    android:padding="12dp"
-                    android:text="@string/register"
-                    android:textAlignment="center"
-                    android:textAllCaps="true"
-                    android:textColor="#ffffff"
-                    android:textSize="16sp" />
-            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
+    </FrameLayout>
+
 </ScrollView>
