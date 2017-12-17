@@ -26,14 +26,6 @@
             android:name=".PanelActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".RegisterActivity"
-            android:label="@string/registerActivityName"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="co.ardulous.skillindia.RegisterActivity" />
-        </activity>
     </application>
 
 </manifest>

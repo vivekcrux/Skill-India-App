@@ -45,14 +45,9 @@
     <!--Register Activity & Login Fragment Content-->
     <string name="signup">Sign Up</string>
     <string name="firstname">First Name</string>
-    <string name="firstnameInput">Your First Name Here</string>
     <string name="lastname">Last Name</string>
-    <string name="lastnameInput">Your Last Name Here</string>
-    <string name="starredPhone">Phone</string>
-    <string name="phoneInput">Your 10 digit phone number</string>
-    <string name="starredPassword">Password</string>
-    <string name="starredConfirmPassword">Confirm Password:</string>
-    <string name="passwordInput">Your Password Here</string>
+    <string name="ConfirmPassword">Confirm Password</string>
+    <string name="required">*This field is required</string>
     <string name="register">Register</string>
     <string name="LogIn">Login</string>
     <string name="googleSignIn">Sign In with Google</string>
@@ -64,4 +59,6 @@
     <!--InternetWarning-->
     <string name="internet_warn">No Internet Connection!!</string>
     <string name="retry">Retry</string>
+
+
 </resources>

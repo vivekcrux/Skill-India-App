@@ -57,6 +57,7 @@ public class AccountFragment extends Fragment {
         return itemView;
     }
 
+
     private void switchFragment(Fragment thisFragment) {
         getChildFragmentManager().beginTransaction().replace(R.id.container, thisFragment).commit();
         loginTabOpen = !loginTabOpen;

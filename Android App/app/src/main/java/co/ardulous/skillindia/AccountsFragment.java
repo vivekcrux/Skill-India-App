@@ -24,10 +24,9 @@ public class AccountsFragment extends Fragment {
     private LinearLayout buttonPanel;
     private Button retryButton;
     private LinearLayout GoogleSignInContainer;
-    private TextView RegisterButton;
     private TextView LoginButton;
-    private EditText phoneNumberView;
-    private EditText passwordView;
+    private TextInputEditText phoneNumberView;
+    private TextInputEditText passwordView;
     private ConnectivityManager connectivityManager;
     private NetworkInfo networkInfo;
     public AccountsFragment() {
@@ -48,7 +47,6 @@ public class AccountsFragment extends Fragment {
             SignInContainer.setVisibility(View.VISIBLE);
             GoogleSignInContainer.setVisibility(View.VISIBLE);
             InternetWarn.setVisibility(View.GONE);
-            RegisterButton = rootView.findViewById(R.id.register_button);
             phoneNumberView = rootView.findViewById(R.id.phone);
             passwordView = rootView.findViewById(R.id.password);
             LoginButton.setOnClickListener(new View.OnClickListener() {
