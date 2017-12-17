@@ -8,6 +8,8 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +35,9 @@ public class RegisterFragment extends Fragment {
     private TextInputEditText firstNameView, lastNameView, phoneView;
     private TextInputEditText passwordView, confirmPasswordView;
     private ArrayList<ItemMap> Items = new ArrayList<>();
-    private Map<Integer, Integer> map = new HashMap<>();
+    private SparseIntArray map = new SparseIntArray();
+
+    private boolean statusFlag;
 
     public RegisterFragment() {
     }
@@ -53,13 +57,6 @@ public class RegisterFragment extends Fragment {
         Items.add(new ItemMap(R.id.phone, R.id.phoneRequired));
         Items.add(new ItemMap(R.id.Password, R.id.passwordRequired));
         Items.add(new ItemMap(R.id.confirmPassword, R.id.confirmRequired));
-
-        for (int i = 0; i < Items.size(); ++i) {
-            //Log.e("RegisterFragment",String.valueOf(Items.get(i).getID()));
-            int fieldID = Items.get(i).getID();
-            map.put(fieldID, i);
-            //Log.e("RegisterFragment",String.valueOf(map.get(fieldID)));
-        }
     }
 
     @Nullable
@@ -84,18 +81,30 @@ public class RegisterFragment extends Fragment {
         RegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean statusFlag = false;
-                for (int i = 0; i < Items.size(); ++i) {
-                    int id = Items.get(i).getID();
-                    TextInputEditText editText = getActivity().findViewById(id);
-                    String text = editText.getText().toString().trim();
-                    if (text.isEmpty()) {
-                        Toast.makeText(getContext(), "The fields can't be blank", Toast.LENGTH_SHORT).show();
-                        statusFlag = true;
-                        break;
+                statusFlag = false;
+
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+
+                        for (int i = 0; i < Items.size(); ++i) {
+                            int id = Items.get(i).getID();
+
+                            map.put(id, i);
+
+                            TextInputEditText editText = getActivity().findViewById(id);
+                            String text = editText.getText().toString().trim();
+                            if (text.isEmpty()) {
+                                Toast.makeText(getContext(), "The fields can't be blank", Toast.LENGTH_SHORT).show();
+                                statusFlag = true;
+                                break;
+                            }
+                        }
                     }
-                }
-                if (statusFlag == false) {
+                }.run();
+
+                if (!statusFlag) {
                     int phoneLength=phoneView.getText().toString().trim().length();
                     String password=passwordView.getText().toString().trim();
                     String confirmPassword=confirmPasswordView.getText().toString().trim();
@@ -107,7 +116,7 @@ public class RegisterFragment extends Fragment {
                     {
                         Toast.makeText(getContext(), "The password should be at least 8 characters long", Toast.LENGTH_SHORT).show();
                     }
-                    else if(password.equals(confirmPassword)==false)
+                    else if(!password.equals(confirmPassword))
                     {
                         //Log.e("RegisterFragment",password);
                         //Log.e("RegisterFragment",confirmPassword);
@@ -160,39 +169,55 @@ public class RegisterFragment extends Fragment {
                 if (charSequence.toString().trim().length() != 0) {
                     int fieldID = editText.getId();
                     //Log.e("RegisterFragment",String.valueOf(fieldID));
-                    int pos = map.get(fieldID);
+                    final int pos = map.get(fieldID);
                     int currPromptID = Items.get(pos).getErrID();
                     TextView currPromptTextView = getActivity().findViewById(currPromptID);
                     if (currPromptTextView.getVisibility() == View.VISIBLE) {
                         currPromptTextView.setVisibility(View.GONE);
                     }
-                    for (int it = 0; it < pos; ++it) {
-                        int checkFieldID = Items.get(it).getID();
-                        int checkPromptID = Items.get(it).getErrID();
-                        TextInputEditText tempEditField = getActivity().findViewById(checkFieldID);
-                        int length = tempEditField.getText().toString().trim().length();
-                        TextView messageView = getActivity().findViewById(checkPromptID);
-                        if (length == 0) {
-                            if (messageView.getVisibility() != View.VISIBLE) {
-                                messageView.setVisibility(View.VISIBLE);
+
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+
+                            for (int it = 0; it < pos; ++it) {
+                                int checkFieldID = Items.get(it).getID();
+                                int checkPromptID = Items.get(it).getErrID();
+                                TextInputEditText tempEditField = getActivity().findViewById(checkFieldID);
+                                int length = tempEditField.getText().toString().trim().length();
+                                TextView messageView = getActivity().findViewById(checkPromptID);
+                                if (length == 0) {
+                                    if (messageView.getVisibility() != View.VISIBLE) {
+                                        messageView.setVisibility(View.VISIBLE);
+                                    }
+                                }
                             }
                         }
-                    }
+                    }.run();
                 } else {
                     int fieldID = editText.getId();
-                    int pos = map.get(fieldID);
+                    final int pos = map.get(fieldID);
                     int currPromptID = Items.get(pos).getErrID();
                     TextView currPromptTextView = getActivity().findViewById(currPromptID);
                     if (currPromptTextView.getVisibility() == View.VISIBLE) {
                         currPromptTextView.setVisibility(View.GONE);
                     }
-                    for (int it = 0; it < pos; ++it) {
-                        int checkPromptID = Items.get(it).getErrID();
-                        TextView messageView = getActivity().findViewById(checkPromptID);
-                        if (messageView.getVisibility() == View.VISIBLE) {
-                            messageView.setVisibility(View.GONE);
+
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+
+                            for (int it = 0; it < pos; ++it) {
+                                int checkPromptID = Items.get(it).getErrID();
+                                TextView messageView = getActivity().findViewById(checkPromptID);
+                                if (messageView.getVisibility() == View.VISIBLE) {
+                                    messageView.setVisibility(View.GONE);
+                                }
+                            }
                         }
-                    }
+                    }.run();
                 }
             }
 
@@ -208,16 +233,16 @@ public class RegisterFragment extends Fragment {
         private int ID;
         private int errID;
 
-        public ItemMap(int tmpID, int tmpErrID) {
+        ItemMap(int tmpID, int tmpErrID) {
             ID = tmpID;
             errID = tmpErrID;
         }
 
-        public int getID() {
+        int getID() {
             return ID;
         }
 
-        public int getErrID() {
+        int getErrID() {
             return errID;
         }
     }

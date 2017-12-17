@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical"
-    tools:context="co.ardulous.skillindia.AccountsFragment">
+    tools:context="co.ardulous.skillindia.LoginFragment">
 
     <FrameLayout
         android:layout_width="match_parent"

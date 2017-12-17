@@ -1,6 +1,5 @@
 package co.ardulous.skillindia;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,7 +19,7 @@ public class AccountFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         loginTabOpen = false;
-        switchFragment(new AccountsFragment());
+        switchFragment(new LoginFragment());
     }
 
     @Nullable
@@ -36,7 +35,7 @@ public class AccountFragment extends Fragment {
             public void onClick(View view) {
                 if(view.getId() == R.id.login_button) {
                     if(!loginTabOpen) {
-                        switchFragment(new AccountsFragment());
+                        switchFragment(new LoginFragment());
 
                         login.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
                         register.setBackgroundColor(getResources().getColor(android.R.color.background_light));
