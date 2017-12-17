@@ -20,11 +20,11 @@
     <string name="gallery">Gallery</string>
     <string name="locate">Locate Centre</string>
     <string name="login">Login/Register</string>
-    <string name="tender">Tender</string>
+    <string name="partner">Become Training Partner</string>
     <string name="contact">Contact Us</string>
     <string name="feedback">Send Feedback</string>
     <string name="share">Share</string>
-    <string name="business">Business</string>
+    <string name="joinUs">Join Us</string>
     <string name="communication">Communication</string>
     <string name="home">Home</string>
 
@@ -59,6 +59,9 @@
     <!--InternetWarning-->
     <string name="internet_warn">No Internet Connection!!</string>
     <string name="retry">Retry</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

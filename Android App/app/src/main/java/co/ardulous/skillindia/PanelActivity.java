@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,10 +16,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class PanelActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static FragmentManager fm;
+    private static Fragment currentFragment;
 
     DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -50,6 +53,9 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
         ((NavigationView) findViewById(R.id.navView)).setNavigationItemSelectedListener(this);
 
         tapCount = 0;
+
+        fm = getSupportFragmentManager();
+        switchFragment(new UpdatesFragment());
     }
 
     @Override
@@ -57,9 +63,11 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
         switch (item.getItemId()) {
 
             case R.id.home:
+                switchFragment(new UpdatesFragment());
+                break;
 
             case R.id.about:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragContainer, new AboutFragment()).commit();
+                switchFragment(new AboutFragment());
                 break;
 
             case R.id.contribute:
@@ -72,10 +80,11 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
                 break;
 
             case R.id.login:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragContainer, new AccountFragment()).commit();
+                switchFragment(new AccountFragment());
                 break;
 
-            case R.id.tender:
+            case R.id.partner:
+                switchFragment(new TrainingFragment());
                 break;
 
             case R.id.contact:
@@ -144,6 +153,13 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
         } else {
             tapCount = 0;
             onBackPressed();
+        }
+    }
+
+    private static void switchFragment(Fragment thisFragment) {
+        if(thisFragment != currentFragment) {
+            fm.beginTransaction().replace(R.id.fragContainer, thisFragment).commit();
+            currentFragment = thisFragment;
         }
     }
 }

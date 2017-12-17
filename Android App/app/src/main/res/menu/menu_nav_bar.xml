@@ -31,15 +31,15 @@
             android:icon="@drawable/user" />
 
         <item
-            android:id="@+id/business"
-            android:title="@string/business">
+            android:id="@+id/joinUs"
+            android:title="@string/joinUs">
 
             <menu>
 
                 <item
-                    android:id="@+id/tender"
-                    android:title="@string/tender"
-                    android:icon="@drawable/ic_tender_black_24dp" />
+                    android:id="@+id/partner"
+                    android:title="@string/partner"
+                    android:icon="@drawable/ic_school_black_24dp" />
 
             </menu>
 
