@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
@@ -24,7 +25,7 @@ import java.util.Map;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends android.app.Fragment {
 
     private ConnectivityManager connectivityManager;
     private TextView RegisterButton;
@@ -73,6 +74,15 @@ public class RegisterFragment extends Fragment {
         passwordView = itemView.findViewById(R.id.Password);
         confirmPasswordView = itemView.findViewById(R.id.confirmPassword);
         RegisterButton = itemView.findViewById(R.id.register_button);
+
+        TextView login = itemView.findViewById(R.id.login);
+        login.setText(Html.fromHtml("Already have an Account ? <u>Login</u>"));
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         Instantiator();
 

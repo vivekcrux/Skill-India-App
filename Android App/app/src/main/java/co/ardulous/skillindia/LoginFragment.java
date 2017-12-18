@@ -2,23 +2,21 @@ package co.ardulous.skillindia;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends android.app.Fragment {
     private LinearLayout SignInContainer;
     private LinearLayout InternetWarn;
     private LinearLayout buttonPanel;
@@ -29,19 +27,38 @@ public class LoginFragment extends Fragment {
     private TextInputEditText passwordView;
     private ConnectivityManager connectivityManager;
     private NetworkInfo networkInfo;
+
+    private Context context;
+
     public LoginFragment() {
+    }
+
+    public static LoginFragment newInstance(Context context) {
+        LoginFragment fragment = new LoginFragment();
+        fragment.context = context;
+        return fragment;
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_accounts, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_login, container, false);
         SignInContainer=rootView.findViewById(R.id.SignInWidget);
         InternetWarn=rootView.findViewById(R.id.internetWarn);
         retryButton=rootView.findViewById(R.id.retry);
         LoginButton = rootView.findViewById(R.id.login_button);
         GoogleSignInContainer = rootView.findViewById(R.id.google_login);
-        connectivityManager=(ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        connectivityManager=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        TextView register = rootView.findViewById(R.id.register);
+        register.setText(Html.fromHtml("Don't have an Account ? <u>Register</u>"));
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         if(connectivityManager != null)
             networkInfo=connectivityManager.getActiveNetworkInfo();
         if(networkInfo!=null) {

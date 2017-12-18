@@ -80,7 +80,8 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
                 break;
 
             case R.id.login:
-                switchFragment(new AccountFragment());
+                getFragmentManager().beginTransaction().
+                        replace(R.id.fragContainer, AccountFragment.newInstance(this), "Account").commit();
                 break;
 
             case R.id.partner:
@@ -156,7 +157,11 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
         }
     }
 
-    private static void switchFragment(Fragment thisFragment) {
+    private void switchFragment(Fragment thisFragment) {
+        android.app.Fragment fragment = getFragmentManager().findFragmentByTag("Account");
+        if(fragment != null)
+            getFragmentManager().beginTransaction().remove(fragment).commit();
+
         if(thisFragment != currentFragment) {
             fm.beginTransaction().replace(R.id.fragContainer, thisFragment).commit();
             currentFragment = thisFragment;
