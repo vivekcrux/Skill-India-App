@@ -11,15 +11,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="240afaa4-3c51-4760-90f8-0dff63b87f1d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.lock" afterPath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/javaCompile/classAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/javaCompile/classAnalysis.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/javaCompile/javaCompile.lock" afterPath="$PROJECT_DIR$/.gradle/4.1/javaCompile/javaCompile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/taskHistory/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/taskHistory/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/PanelActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/PanelActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/AccountFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/AccountFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/RegisterFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/RegisterFragment.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -43,6 +36,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="RegisterFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/RegisterFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="43" column="28" lean-forward="false" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AccountFragment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/AccountFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="212">
+              <caret line="41" column="10" lean-forward="true" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="fragment_register.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_register.xml">
           <provider editor-type-id="android-designer2">
@@ -87,7 +100,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PanelActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PanelActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/PanelActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="348">
@@ -1888,16 +1901,16 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_accounts.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/AboutFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/LoginFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/RegisterFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_account.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/AccountFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/gradient_register.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_register.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_login.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/PanelActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/RegisterFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/AccountFragment.java" />
       </list>
     </option>
   </component>
@@ -2167,7 +2180,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1513598747573" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1513599871120" />
       </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
@@ -2215,7 +2228,7 @@
       </Profilers>
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1513598747574" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1513599871120" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -2398,7 +2411,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1513598747576" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1513599871120" />
       </method>
     </configuration>
     <list size="1">
@@ -2849,25 +2862,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/RegisterFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="88" column="45" lean-forward="false" selection-start-line="88" selection-start-column="45" selection-end-line="88" selection-end-column="45" />
-          <folding>
-            <element signature="e#3517#5717#0" expanded="true" />
-            <element signature="e#3666#4481#0" expanded="true" />
-            <element signature="e#4480#4481#0" expanded="true" />
-            <element signature="e#5716#5717#0" expanded="true" />
-            <element signature="e#5975#6229#0" expanded="true" />
-            <element signature="e#6228#6229#0" expanded="true" />
-            <element signature="e#7518#8539#0" expanded="true" />
-            <element signature="e#8538#8539#0" expanded="true" />
-            <element signature="e#9026#9668#0" expanded="true" />
-            <element signature="e#9667#9668#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/LoginFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="782">
@@ -2891,14 +2885,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="12" lean-forward="false" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/AccountFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="56" column="0" lean-forward="true" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -2987,6 +2973,22 @@
             <element signature="e#2805#2830#0" expanded="true" />
             <element signature="e#2990#3015#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/RegisterFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="43" column="28" lean-forward="false" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/co/ardulous/skillindia/AccountFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="41" column="10" lean-forward="true" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>

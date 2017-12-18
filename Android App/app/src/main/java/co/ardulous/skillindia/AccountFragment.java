@@ -36,7 +36,7 @@ public class AccountFragment extends android.app.Fragment {
                     getChildFragmentManager().beginTransaction().setCustomAnimations(
                             R.animator.flip_right_in, R.animator.flip_right_out,
                             R.animator.flip_left_in, R.animator.flip_left_out
-                    ).replace(R.id.container, RegisterFragment.newInstance(this)).addToBackStack(null).commit();
+                    ).replace(R.id.container, RegisterFragment.newInstance(this, context)).addToBackStack(null).commit();
                 }
             }
         };

@@ -1,5 +1,6 @@
 package co.ardulous.skillindia;
 
+import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -40,13 +41,15 @@ public class RegisterFragment extends android.app.Fragment {
 
     private boolean statusFlag;
     private View.OnClickListener flipFragment;
+    private Context context;
 
     public RegisterFragment() {
     }
 
-    public static RegisterFragment newInstance(View.OnClickListener flipFragment) {
+    public static RegisterFragment newInstance(View.OnClickListener flipFragment, Context context) {
         RegisterFragment fragment = new RegisterFragment();
 
+        fragment.context = context;
         fragment.flipFragment = flipFragment;
 
         return fragment;
