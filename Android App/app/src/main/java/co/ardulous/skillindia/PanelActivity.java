@@ -82,9 +82,11 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
                 break;
 
             case R.id.login:
-                fragmentManager.beginTransaction().
-                        replace(R.id.fragContainer, AccountFragment.newInstance(this), getString(R.string.login)).commit();
-                fm.beginTransaction().remove(fm.findFragmentByTag(currentString)).commit();
+                if(fragmentManager.findFragmentByTag(getString(R.string.login)) != null) {
+                    fragmentManager.beginTransaction().
+                            replace(R.id.fragContainer, AccountFragment.newInstance(this), getString(R.string.login)).commit();
+                    fm.beginTransaction().remove(fm.findFragmentByTag(currentString)).commit();
+                }
                 break;
 
             case R.id.partner:
@@ -139,9 +141,10 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
     public void onBackPressed() {
         if(drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawer(GravityCompat.START);
-        else if(fragmentManager.findFragmentByTag(getString(R.string.login)) != null)
+        else if(fragmentManager.findFragmentByTag(getString(R.string.login)) != null) {
             switchFragment(new UpdatesFragment(), getString(R.string.home));
-        else if(tapCount == 0) {
+            fm.beginTransaction().replace(R.id.fragContainer, new UpdatesFragment(), getString(R.string.home)).commit();
+        } else if(tapCount == 0) {
             final Snackbar snackBar = Snackbar
                     .make(findViewById(R.id.coordinatorView), "Tap Again to Exit", Snackbar.LENGTH_LONG);
 
