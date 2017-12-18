@@ -82,7 +82,7 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
                 break;
 
             case R.id.login:
-                if(fragmentManager.findFragmentByTag(getString(R.string.login)) != null) {
+                if(fragmentManager.findFragmentByTag(getString(R.string.login)) == null) {
                     fragmentManager.beginTransaction().
                             replace(R.id.fragContainer, AccountFragment.newInstance(this), getString(R.string.login)).commit();
                     fm.beginTransaction().remove(fm.findFragmentByTag(currentString)).commit();
