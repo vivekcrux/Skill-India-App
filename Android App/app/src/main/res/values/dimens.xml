@@ -8,4 +8,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="padding_text_about">16dp</dimen>
     <dimen name="text_size_about">20sp</dimen>
+
+    <dimen name="text_size_login_register">14sp</dimen>
 </resources>

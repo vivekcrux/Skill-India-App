@@ -165,7 +165,7 @@
 
         <TextView
             android:id="@+id/register"
-            android:textSize="12sp"
+            android:textSize="@dimen/text_size_login_register"
             android:textColor="@android:color/white"
             android:layout_gravity="bottom"
             android:gravity="center_horizontal"

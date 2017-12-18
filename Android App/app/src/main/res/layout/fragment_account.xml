@@ -1,45 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/login_button"
-            android:drawableStart="@drawable/ic_person_black_24dp"
-            android:text="@string/LogIn"
-            android:textSize="16sp"
-            android:padding="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="@android:color/background_light"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/register_button"
-            android:drawableStart="@drawable/ic_person_add_black_24dp"
-            android:text="@string/register"
-            android:textSize="16sp"
-            android:padding="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="@android:color/background_light"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</LinearLayout>
+</FrameLayout>

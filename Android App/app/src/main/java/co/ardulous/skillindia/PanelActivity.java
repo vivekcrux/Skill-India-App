@@ -20,7 +20,8 @@ import android.view.View;
 public class PanelActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static FragmentManager fm;
-    private static Fragment currentFragment;
+    private static android.app.FragmentManager fragmentManager;
+    private static String currentString;
 
     DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -55,7 +56,8 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
         tapCount = 0;
 
         fm = getSupportFragmentManager();
-        switchFragment(new UpdatesFragment());
+        fragmentManager = getFragmentManager();
+        switchFragment(new UpdatesFragment(), getString(R.string.home));
     }
 
     @Override
@@ -63,11 +65,11 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
         switch (item.getItemId()) {
 
             case R.id.home:
-                switchFragment(new UpdatesFragment());
+                switchFragment(new UpdatesFragment(), getString(R.string.home));
                 break;
 
             case R.id.about:
-                switchFragment(new AboutFragment());
+                switchFragment(new AboutFragment(), getString(R.string.about));
                 break;
 
             case R.id.contribute:
@@ -80,12 +82,13 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
                 break;
 
             case R.id.login:
-                getFragmentManager().beginTransaction().
-                        replace(R.id.fragContainer, AccountFragment.newInstance(this), "Account").commit();
+                fragmentManager.beginTransaction().
+                        replace(R.id.fragContainer, AccountFragment.newInstance(this), getString(R.string.login)).commit();
+                fm.beginTransaction().remove(fm.findFragmentByTag(currentString)).commit();
                 break;
 
             case R.id.partner:
-                switchFragment(new TrainingFragment());
+                switchFragment(new TrainingFragment(), getString(R.string.partner));
                 break;
 
             case R.id.contact:
@@ -136,8 +139,11 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
     public void onBackPressed() {
         if(drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawer(GravityCompat.START);
+        else if(fragmentManager.findFragmentByTag(getString(R.string.login)) != null)
+            switchFragment(new UpdatesFragment(), getString(R.string.home));
         else if(tapCount == 0) {
-            final Snackbar snackBar = Snackbar.make(findViewById(R.id.coordinatorView), "Tap Again to Exit", Snackbar.LENGTH_LONG);
+            final Snackbar snackBar = Snackbar
+                    .make(findViewById(R.id.coordinatorView), "Tap Again to Exit", Snackbar.LENGTH_LONG);
 
             snackBar.setAction("EXIT", new View.OnClickListener() {
                 @Override
@@ -157,14 +163,15 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
         }
     }
 
-    private void switchFragment(Fragment thisFragment) {
-        android.app.Fragment fragment = getFragmentManager().findFragmentByTag("Account");
-        if(fragment != null)
-            getFragmentManager().beginTransaction().remove(fragment).commit();
+    private void switchFragment(Fragment thisFragment, String thisString) {
+        android.app.Fragment fragment = fragmentManager.findFragmentByTag(getString(R.string.login));
+        if(fragment != null) {
+            fragmentManager.beginTransaction().remove(fragment).commit();
+        }
 
-        if(thisFragment != currentFragment) {
-            fm.beginTransaction().replace(R.id.fragContainer, thisFragment).commit();
-            currentFragment = thisFragment;
+        if(!thisString.equals(currentString)) {
+            fm.beginTransaction().replace(R.id.fragContainer, thisFragment, thisString).commit();
+            currentString = thisString;
         }
     }
 }

@@ -39,8 +39,17 @@ public class RegisterFragment extends android.app.Fragment {
     private SparseIntArray map = new SparseIntArray();
 
     private boolean statusFlag;
+    private View.OnClickListener flipFragment;
 
     public RegisterFragment() {
+    }
+
+    public static RegisterFragment newInstance(View.OnClickListener flipFragment) {
+        RegisterFragment fragment = new RegisterFragment();
+
+        fragment.flipFragment = flipFragment;
+
+        return fragment;
     }
 
     @Override
@@ -77,12 +86,7 @@ public class RegisterFragment extends android.app.Fragment {
 
         TextView login = itemView.findViewById(R.id.login);
         login.setText(Html.fromHtml("Already have an Account ? <u>Login</u>"));
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        login.setOnClickListener(flipFragment);
 
         Instantiator();
 

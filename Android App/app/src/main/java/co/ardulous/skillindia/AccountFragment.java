@@ -10,8 +10,9 @@ import android.view.ViewGroup;
 
 public class AccountFragment extends android.app.Fragment {
 
-    private boolean loginTabOpen;
     private Context context;
+
+    private View.OnClickListener flipFragment;
 
     public AccountFragment() {
     }
@@ -26,42 +27,28 @@ public class AccountFragment extends android.app.Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        loginTabOpen = false;
-        switchFragment(LoginFragment.newInstance(context));
+        flipFragment = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view.getId() != R.id.register) {
+                    getChildFragmentManager().popBackStack();
+                } else {
+                    getChildFragmentManager().beginTransaction().setCustomAnimations(
+                            R.animator.flip_right_in, R.animator.flip_right_out,
+                            R.animator.flip_left_in, R.animator.flip_left_out
+                    ).replace(R.id.container, RegisterFragment.newInstance(this)).addToBackStack(null).commit();
+                }
+            }
+        };
+
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.container, LoginFragment.newInstance(context, flipFragment)).commit();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View itemView = inflater.inflate(R.layout.fragment_account, container, false);
-
-        final View login = itemView.findViewById(R.id.login_button), register = itemView.findViewById(R.id.register_button);
-        login.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
-
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(view.getId() == R.id.login_button) {
-                    if(!loginTabOpen) {
-                        switchFragment(LoginFragment.newInstance(context));
-
-                        login.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
-                        register.setBackgroundColor(getResources().getColor(android.R.color.background_light));
-                    }
-                } else {
-                    if(loginTabOpen) {
-                        switchFragment(new RegisterFragment());
-
-                        register.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
-                        login.setBackgroundColor(getResources().getColor(android.R.color.background_light));
-                    }
-                }
-            }
-        };
-        login.setOnClickListener(onClickListener);
-        register.setOnClickListener(onClickListener);
-
-        return itemView;
+        return inflater.inflate(R.layout.fragment_account, container, false);
     }
 
     @Override
@@ -80,10 +67,5 @@ public class AccountFragment extends android.app.Fragment {
         }
 
         super.onStop();
-    }
-
-    private void switchFragment(android.app.Fragment thisFragment) {
-        getChildFragmentManager().beginTransaction().replace(R.id.container, thisFragment).commit();
-        loginTabOpen = !loginTabOpen;
     }
 }

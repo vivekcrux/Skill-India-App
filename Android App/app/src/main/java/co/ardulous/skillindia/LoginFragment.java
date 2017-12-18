@@ -29,13 +29,17 @@ public class LoginFragment extends android.app.Fragment {
     private NetworkInfo networkInfo;
 
     private Context context;
+    private View.OnClickListener flipFragment;
 
     public LoginFragment() {
     }
 
-    public static LoginFragment newInstance(Context context) {
+    public static LoginFragment newInstance(Context context, View.OnClickListener flipFragment) {
         LoginFragment fragment = new LoginFragment();
+
         fragment.context = context;
+        fragment.flipFragment = flipFragment;
+
         return fragment;
     }
 
@@ -52,12 +56,7 @@ public class LoginFragment extends android.app.Fragment {
 
         TextView register = rootView.findViewById(R.id.register);
         register.setText(Html.fromHtml("Don't have an Account ? <u>Register</u>"));
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        register.setOnClickListener(flipFragment);
 
         if(connectivityManager != null)
             networkInfo=connectivityManager.getActiveNetworkInfo();
