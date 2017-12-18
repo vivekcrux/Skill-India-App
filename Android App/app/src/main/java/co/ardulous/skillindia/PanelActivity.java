@@ -89,10 +89,6 @@ public class PanelActivity extends AppCompatActivity implements NavigationView.O
                 }
                 break;
 
-            case R.id.partner:
-                switchFragment(new TrainingFragment(), getString(R.string.partner));
-                break;
-
             case R.id.contact:
                 break;
 

@@ -6,23 +6,23 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.SparseArray;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 
@@ -38,6 +38,7 @@ public class RegisterFragment extends android.app.Fragment {
     private TextInputEditText passwordView, confirmPasswordView;
     private ArrayList<ItemMap> Items = new ArrayList<>();
     private SparseIntArray map = new SparseIntArray();
+    private RadioButton MentorButton,StudentButton;
 
     private boolean statusFlag;
     private View.OnClickListener flipFragment;
@@ -59,7 +60,7 @@ public class RegisterFragment extends android.app.Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        connectivityManager = (ConnectivityManager) getContext().getSystemService(CONNECTIVITY_SERVICE);
+        connectivityManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
         if (connectivityManager != null)
             networkInfo = connectivityManager.getActiveNetworkInfo();
     }
@@ -70,6 +71,11 @@ public class RegisterFragment extends android.app.Fragment {
         Items.add(new ItemMap(R.id.phone, R.id.phoneRequired));
         Items.add(new ItemMap(R.id.Password, R.id.passwordRequired));
         Items.add(new ItemMap(R.id.confirmPassword, R.id.confirmRequired));
+        for(int i=0;i<Items.size();++i)
+        {
+            int id = Items.get(i).getID();
+            map.put(id, i);
+        }
     }
 
     @Nullable
@@ -86,6 +92,8 @@ public class RegisterFragment extends android.app.Fragment {
         passwordView = itemView.findViewById(R.id.Password);
         confirmPasswordView = itemView.findViewById(R.id.confirmPassword);
         RegisterButton = itemView.findViewById(R.id.register_button);
+        MentorButton=itemView.findViewById(R.id.mentor);
+        StudentButton=itemView.findViewById(R.id.student);
 
         TextView login = itemView.findViewById(R.id.login);
         login.setText(Html.fromHtml("Already have an Account ? <u>Login</u>"));
@@ -94,6 +102,24 @@ public class RegisterFragment extends android.app.Fragment {
         Instantiator();
 
         checkNetworkInfo();
+
+        MentorButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b && StudentButton.isChecked())
+                {
+                    StudentButton.setChecked(false);
+                }
+            }
+        });
+        StudentButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b && MentorButton.isChecked()){
+                    MentorButton.setChecked(false);
+                }
+            }
+        });
 
         RegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,12 +134,10 @@ public class RegisterFragment extends android.app.Fragment {
                         for (int i = 0; i < Items.size(); ++i) {
                             int id = Items.get(i).getID();
 
-                            map.put(id, i);
-
                             TextInputEditText editText = getActivity().findViewById(id);
                             String text = editText.getText().toString().trim();
                             if (text.isEmpty()) {
-                                Toast.makeText(getContext(), "The fields can't be blank", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "The fields can't be blank", Toast.LENGTH_SHORT).show();
                                 statusFlag = true;
                                 break;
                             }
@@ -122,25 +146,19 @@ public class RegisterFragment extends android.app.Fragment {
                 }.run();
 
                 if (!statusFlag) {
-                    int phoneLength=phoneView.getText().toString().trim().length();
-                    String password=passwordView.getText().toString().trim();
-                    String confirmPassword=confirmPasswordView.getText().toString().trim();
-                    if(phoneLength!=10)
-                    {
-                        Toast.makeText(getContext(), "The phone number that you entered is invalid", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(password.length()<8)
-                    {
-                        Toast.makeText(getContext(), "The password should be at least 8 characters long", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(!password.equals(confirmPassword))
-                    {
+                    int phoneLength = phoneView.getText().toString().trim().length();
+                    String password = passwordView.getText().toString().trim();
+                    String confirmPassword = confirmPasswordView.getText().toString().trim();
+                    if (phoneLength != 10) {
+                        Toast.makeText(context, "The phone number that you entered is invalid", Toast.LENGTH_SHORT).show();
+                    } else if (password.length() < 8) {
+                        Toast.makeText(context, "The password should be at least 8 characters long", Toast.LENGTH_SHORT).show();
+                    } else if (!password.equals(confirmPassword)) {
                         //Log.e("RegisterFragment",password);
                         //Log.e("RegisterFragment",confirmPassword);
-                        Toast.makeText(getContext(), "The two passwords do not match", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "The two passwords do not match", Toast.LENGTH_SHORT).show();
                     }
-                    else
-                    {
+                    else {
                         //send OTP
                     }
                 }

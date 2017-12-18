@@ -22,7 +22,7 @@
     <string name="login">Login/Register</string>
     <string name="partner">Become Training Partner</string>
     <string name="contact">Contact Us</string>
-    <string name="feedback">Send Feedback</string>
+    <string name="feedback">Report Issue</string>
     <string name="share">Share</string>
     <string name="joinUs">Join Us</string>
     <string name="communication">Communication</string>
@@ -55,7 +55,9 @@
     <string name="password">Password</string>
     <string name="phone">Phone</string>
     <string name="signin">Sign In</string>
-
+    <string name="mentor">Trainer</string>
+    <string name="student">Student</string>
+    <string name="registerMode">Register me as a:</string>
     <!--InternetWarning-->
     <string name="internet_warn">No Internet Connection!!</string>
     <string name="retry">Retry</string>

@@ -31,21 +31,6 @@
             android:icon="@drawable/user" />
 
         <item
-            android:id="@+id/joinUs"
-            android:title="@string/joinUs">
-
-            <menu>
-
-                <item
-                    android:id="@+id/partner"
-                    android:title="@string/partner"
-                    android:icon="@drawable/ic_school_black_24dp" />
-
-            </menu>
-
-        </item>
-
-        <item
             android:id="@+id/communication"
             android:title="@string/communication">
 
