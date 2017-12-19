@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -15,11 +16,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 public class LoginFragment extends android.app.Fragment {
     private LinearLayout SignInContainer;
     private LinearLayout InternetWarn;
-    private LinearLayout buttonPanel;
     private Button retryButton;
     private LinearLayout GoogleSignInContainer;
     private TextView LoginButton;
@@ -43,6 +49,7 @@ public class LoginFragment extends android.app.Fragment {
         return fragment;
     }
 
+
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,12 +59,11 @@ public class LoginFragment extends android.app.Fragment {
         retryButton=rootView.findViewById(R.id.retry);
         LoginButton = rootView.findViewById(R.id.login_button);
         GoogleSignInContainer = rootView.findViewById(R.id.google_login);
-        connectivityManager=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         TextView register = rootView.findViewById(R.id.register);
         register.setText(Html.fromHtml("Don't have an Account ? <u>Register</u>"));
         register.setOnClickListener(flipFragment);
-
+        connectivityManager=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if(connectivityManager != null)
             networkInfo=connectivityManager.getActiveNetworkInfo();
         if(networkInfo!=null) {

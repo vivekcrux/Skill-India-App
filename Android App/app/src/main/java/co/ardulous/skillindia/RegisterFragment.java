@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.text.Editable;
@@ -21,7 +22,18 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
@@ -44,6 +56,11 @@ public class RegisterFragment extends android.app.Fragment {
     private View.OnClickListener flipFragment;
     private Context context;
 
+    FirebaseAuth mFirebaseAuth;
+    FirebaseAuth.AuthStateListener authStateListener;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+
     public RegisterFragment() {
     }
 
@@ -63,6 +80,41 @@ public class RegisterFragment extends android.app.Fragment {
         connectivityManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
         if (connectivityManager != null)
             networkInfo = connectivityManager.getActiveNetworkInfo();
+        if(networkInfo!=null)
+        {
+            mFirebaseAuth=FirebaseAuth.getInstance();
+            firebaseDatabase=FirebaseDatabase.getInstance();
+            databaseReference=firebaseDatabase.getReference().child("users/PhoneUsers");
+            authStateListener=new FirebaseAuth.AuthStateListener() {
+                @Override
+                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                    FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
+                    if(firebaseUser==null)
+                    {
+                        //this runs when the user is not signed in
+
+
+
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(),"Signed In",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            };
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mFirebaseAuth.removeAuthStateListener(authStateListener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mFirebaseAuth.addAuthStateListener(authStateListener);
     }
 
     private void Instantiator() {
@@ -146,9 +198,21 @@ public class RegisterFragment extends android.app.Fragment {
                 }.run();
 
                 if (!statusFlag) {
-                    int phoneLength = phoneView.getText().toString().trim().length();
-                    String password = passwordView.getText().toString().trim();
+                    final String phno=phoneView.getText().toString().trim();
+                    final String fname=firstNameView.getText().toString().trim();
+                    final String lname=lastNameView.getText().toString().trim();
+                    int phoneLength = phno.length();
+                    final int registrationType;
+                    final String password = passwordView.getText().toString().trim();
                     String confirmPassword = confirmPasswordView.getText().toString().trim();
+                    if(StudentButton.isChecked())
+                    {
+                        registrationType=1;
+                    }
+                    else
+                    {
+                        registrationType=2;
+                    }
                     if (phoneLength != 10) {
                         Toast.makeText(context, "The phone number that you entered is invalid", Toast.LENGTH_SHORT).show();
                     } else if (password.length() < 8) {
@@ -159,7 +223,28 @@ public class RegisterFragment extends android.app.Fragment {
                         Toast.makeText(context, "The two passwords do not match", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        //send OTP
+                        StringBuilder stringBuilder=new StringBuilder();
+                        stringBuilder.append("+91").append(phno);
+                        final String phnoWithCountryCode=stringBuilder.toString();
+                        databaseReference.child(phnoWithCountryCode).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if(dataSnapshot.exists())
+                                {
+                                    Toast.makeText(context,"Error:This phone number is already registered with us!",Toast.LENGTH_SHORT).show();
+                                }
+                                else
+                                {
+                                    AddToFireBase(fname,lname,phnoWithCountryCode,password,registrationType);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Toast.makeText(context,"Some unexpected error occurred!!",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                     }
                 }
             }
@@ -168,6 +253,19 @@ public class RegisterFragment extends android.app.Fragment {
         return itemView;
     }
 
+    private void AddToFireBase(String fname,String lname,String phno,String password,int registrationType)
+    {
+        try {
+            password=AESCrypt.encrypt(password);
+            PhoneUsers user=new PhoneUsers(fname,lname,phno,password,registrationType);
+            databaseReference.child(phno).setValue(user);
+        }
+        catch (Exception e)
+        {
+            Log.e("RegisterFragment",e.toString());
+            Toast.makeText(getActivity(),"Some unexpected error occurred!",Toast.LENGTH_SHORT).show();
+        }
+    }
     private void checkNetworkInfo() {
         if (networkInfo == null) {
 
