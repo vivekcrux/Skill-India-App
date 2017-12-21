@@ -118,22 +118,9 @@
 
     </LinearLayout>
 
-    <!--<android.support.v7.widget.CardView
-        app:cardCornerRadius="5dp"
-        app:cardElevation="10dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-
-    </android.support.v7.widget.CardView>-->
-
     <TextView
-        android:text="OR"
+        android:id="@+id/or"
+        android:text="@string/or"
         android:textStyle="bold"
         android:textSize="12sp"
         android:layout_marginBottom="8dp"
@@ -142,6 +129,7 @@
         android:layout_height="wrap_content" />
 
     <android.support.v7.widget.CardView
+        android:id="@+id/google_login"
         app:cardElevation="10dp"
         app:cardCornerRadius="10dp"
         android:layout_gravity="center_horizontal"
@@ -149,7 +137,6 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/google_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

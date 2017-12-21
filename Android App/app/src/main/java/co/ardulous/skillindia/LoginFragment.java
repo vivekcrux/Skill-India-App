@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +28,14 @@ public class LoginFragment extends android.app.Fragment {
     private LinearLayout SignInContainer;
     private LinearLayout InternetWarn;
     private Button retryButton;
-    private LinearLayout GoogleSignInContainer;
+    private CardView GoogleSignInContainer;
     private TextView LoginButton;
     private TextInputEditText phoneNumberView;
     private TextInputEditText passwordView;
     private ConnectivityManager connectivityManager;
     private NetworkInfo networkInfo;
+    private TextView orTextView;
+    private TextView registerButton;
 
     private Context context;
     private View.OnClickListener flipFragment;
@@ -59,6 +62,8 @@ public class LoginFragment extends android.app.Fragment {
         retryButton=rootView.findViewById(R.id.retry);
         LoginButton = rootView.findViewById(R.id.login_button);
         GoogleSignInContainer = rootView.findViewById(R.id.google_login);
+        orTextView=rootView.findViewById(R.id.or);
+        registerButton=rootView.findViewById(R.id.register);
 
         TextView register = rootView.findViewById(R.id.register);
         register.setText(Html.fromHtml("Don't have an Account ? <u>Register</u>"));
@@ -67,6 +72,8 @@ public class LoginFragment extends android.app.Fragment {
         if(connectivityManager != null)
             networkInfo=connectivityManager.getActiveNetworkInfo();
         if(networkInfo!=null) {
+            registerButton.setVisibility(View.VISIBLE);
+            orTextView.setVisibility(View.VISIBLE);
             SignInContainer.setVisibility(View.VISIBLE);
             GoogleSignInContainer.setVisibility(View.VISIBLE);
             InternetWarn.setVisibility(View.GONE);
@@ -87,7 +94,9 @@ public class LoginFragment extends android.app.Fragment {
         }
         else
         {
+            registerButton.setVisibility(View.GONE);
             SignInContainer.setVisibility(View.GONE);
+            orTextView.setVisibility(View.GONE);
             LoginButton.setVisibility(View.GONE);
             GoogleSignInContainer.setVisibility(View.GONE);
             InternetWarn.setVisibility(View.VISIBLE);

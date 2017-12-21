@@ -9,6 +9,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:id="@+id/framelayout"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -251,6 +252,85 @@
 
             </LinearLayout>
 
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/code_sent_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/border"
+            android:orientation="vertical">
+            <LinearLayout
+                android:padding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:src="@drawable/tick"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="Code Sent"
+                android:textAlignment="center"
+                android:textSize="16sp"/>
+            </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/template_phone"
+                android:textColor="#ffffff"
+                android:digits="0123456789"
+                android:textAlignment="center"
+                android:id="@+id/phone_code_sent"
+                android:background="@color/colorPrimary"/>
+
+            <EditText
+                android:id="@+id/code_sent_verification"
+                android:layout_marginTop="30dp"
+                android:padding="8dp"
+                android:digits="0123456789"
+                android:background="@drawable/border"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:hint="@string/yourcode"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:text="@string/verify"
+                android:id="@+id/verify_button"
+                android:textAllCaps="true"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:padding="8dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/no_receive_code"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_margin="4dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:textAllCaps="true"
+                android:text="@string/resend"
+                android:textColor="#ffffff"
+                android:textAlignment="center"
+                android:id="@+id/resend_button"
+                android:background="@color/colorAccent"/>
         </LinearLayout>
 
     </FrameLayout>
