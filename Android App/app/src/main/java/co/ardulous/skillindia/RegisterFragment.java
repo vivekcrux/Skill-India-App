@@ -58,7 +58,7 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
     FirebaseAuthContent firebaseAuthContent;
     //FirebaseAuth mFirebaseAuth;
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,preEntranceValidator;
 
     private String LOG_TAG = "RegisterFragment";
 
@@ -191,6 +191,22 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
                 break;
             case STATE_SIGNIN_SUCCESS:
                 // Np-op, handled by sign-in check
+                String fname,lname,phno,pass;
+                int memberType;
+                fname=firstNameView.getText().toString();
+                lname=lastNameView.getText().toString();
+                phno=firebaseAuthContent.mAuth.getCurrentUser().getPhoneNumber();
+                if(StudentButton.isChecked())
+                {
+                    memberType=1;
+                }
+                else
+                {
+                    memberType=2;
+                }
+                pass=passwordView.getText().toString();
+                AddToFireBaseUsers(fname,lname,phno,pass,memberType);
+                CurrentUser currentUser=new CurrentUser(fname,lname,phno,memberType);
                 login.performClick();
                 break;
         }
@@ -315,11 +331,12 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
         verificationStatus = true;
     }
 
-    private void AddToFireBase(String fname, String lname, String phno, String password, int registrationType) {
+    private void AddToFireBaseUsers(String fname, String lname, String phno, String password, int registrationType) {
         try {
             password = AESCrypt.encrypt(password);
             PhoneUsers user = new PhoneUsers(fname, lname, phno, password, registrationType);
             databaseReference.child(phno).setValue(user);
+            preEntranceValidator.child(phno).setValue("1");//1 implies user is logged in
         } catch (Exception e) {
             Log.e("RegisterFragment", e.toString());
             Toast.makeText(getActivity(), "Some unexpected error occurred!", Toast.LENGTH_SHORT).show();
@@ -455,18 +472,18 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
 
                 if (!statusFlag) {
                     final String phno = phoneView.getText().toString().trim();
-                    final String fname = firstNameView.getText().toString().trim();
-                    final String lname = lastNameView.getText().toString().trim();
+                    /*final String fname = firstNameView.getText().toString().trim();
+                    final String lname = lastNameView.getText().toString().trim();*/
                     int phoneLength = phno.length();
-                    final int registrationType;
+                    //final int registrationType;
                     final String password = passwordView.getText().toString().trim();
                     String confirmPassword = confirmPasswordView.getText().toString().trim();
-                    if (StudentButton.isChecked()) {
+                    /*if (StudentButton.isChecked()) {
                         //Log.e("RegisterFragment", "1");
                         registrationType = 1;
                     } else {
                         registrationType = 2;
-                    }
+                    }*/
                     if (phoneLength != 10) {
                         Toast.makeText(context, "The phone number that you entered is invalid", Toast.LENGTH_SHORT).show();
                     } else if (password.length() < 8) {
@@ -482,14 +499,14 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
                             return;
                         }
                         final String phnoWithCountryCode = createPhoneNumber(phno);
-                        databaseReference.child(phnoWithCountryCode).addListenerForSingleValueEvent(new ValueEventListener() {
+                        preEntranceValidator=firebaseDatabase.getReference().child("preEntranceValidator").child("phoneList");
+                        preEntranceValidator.child(phnoWithCountryCode).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {
                                     Toast.makeText(context, "Error:This phone number is already registered with us!", Toast.LENGTH_SHORT).show();
                                 } else {
                                     startPhoneVerification(phnoWithCountryCode);
-                                    //AddToFireBase(fname, lname, phnoWithCountryCode, password, registrationType);
                                 }
                             }
 

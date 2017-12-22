@@ -89,6 +89,7 @@ public class LoginFragment extends android.app.Fragment {
 
                     toggleFormOut();
 
+
                 }
                 else
                 {
