@@ -9,14 +9,18 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.CardView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,6 +29,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 public class LoginFragment extends android.app.Fragment {
+
+    private String LOG_TAG="LoginFragment";
+
     private LinearLayout SignInContainer;
     private LinearLayout InternetWarn;
     private Button retryButton;
@@ -36,6 +43,8 @@ public class LoginFragment extends android.app.Fragment {
     private NetworkInfo networkInfo;
     private TextView orTextView;
     private TextView registerButton;
+    private LinearLayout myaccount;
+    private LinearLayout loginForm;
 
     private Context context;
     private View.OnClickListener flipFragment;
@@ -63,12 +72,42 @@ public class LoginFragment extends android.app.Fragment {
         LoginButton = rootView.findViewById(R.id.login_button);
         GoogleSignInContainer = rootView.findViewById(R.id.google_login);
         orTextView=rootView.findViewById(R.id.or);
+        connectivityManager=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         registerButton=rootView.findViewById(R.id.register);
+        loginForm=rootView.findViewById(R.id.loginForm);
 
+        myaccount=rootView.findViewById(R.id.myaccount);
+        FirebaseAuthContent firebaseAuthContent=new FirebaseAuthContent();
+        if(firebaseAuthContent.mAuth!=null)
+        {
+            //Log.e(LOG_TAG,"Auth is not null");
+            networkInfo=connectivityManager.getActiveNetworkInfo();
+            if(networkInfo!=null)
+            {
+                if(firebaseAuthContent.mAuth.getCurrentUser()!=null) {
+                    //Log.e(LOG_TAG,"Hey!Here I am");
+
+                    toggleFormOut();
+
+                }
+                else
+                {
+                    toggleFormIn();
+                }
+            }
+            else
+            {
+                toggleFormIn();
+            }
+
+        }
+        else
+        {
+            toggleFormIn();
+        }
         TextView register = rootView.findViewById(R.id.register);
         register.setText(Html.fromHtml("Don't have an Account ? <u>Register</u>"));
         register.setOnClickListener(flipFragment);
-        connectivityManager=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if(connectivityManager != null)
             networkInfo=connectivityManager.getActiveNetworkInfo();
         if(networkInfo!=null) {
@@ -108,6 +147,16 @@ public class LoginFragment extends android.app.Fragment {
             });
         }
         return rootView;
+    }
+    private void toggleFormIn()
+    {
+        loginForm.setVisibility(View.VISIBLE);
+        myaccount.setVisibility(View.GONE);
+    }
+    private void toggleFormOut()
+    {
+        loginForm.setVisibility(View.GONE);
+        myaccount.setVisibility(View.VISIBLE);
     }
     private void reloadFragment()
     {

@@ -22,7 +22,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,14 +48,19 @@ import java.util.concurrent.TimeUnit;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 
-public class RegisterFragment extends android.app.Fragment implements View.OnClickListener{
+public class RegisterFragment extends android.app.Fragment implements View.OnClickListener {
 
-    private String LOG_TAG="RegisterFragment";
-
-    FirebaseAuth mFirebaseAuth;
-    //FirebaseAuth.AuthStateListener authStateListener;
+    private static final int STATE_CODE_SENT = 2;
+    private static final int STATE_VERIFY_FAILED = 3;
+    private static final int STATE_VERIFY_SUCCESS = 4;
+    private static final int STATE_SIGNIN_FAILED = 5;
+    private static final int STATE_SIGNIN_SUCCESS = 6;
+    FirebaseAuthContent firebaseAuthContent;
+    //FirebaseAuth mFirebaseAuth;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+
+    private String LOG_TAG = "RegisterFragment";
 
     private LinearLayout CodeSentLayout;
     private ConnectivityManager connectivityManager;
@@ -81,13 +85,7 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
     private PhoneAuthProvider.ForceResendingToken resendingToken;
     private String mVerificationID;
     private EditText mVerificationField;
-
-    private static final int STATE_INITIALIZED = 1;
-    private static final int STATE_CODE_SENT = 2;
-    private static final int STATE_VERIFY_FAILED = 3;
-    private static final int STATE_VERIFY_SUCCESS = 4;
-    private static final int STATE_SIGNIN_FAILED = 5;
-    private static final int STATE_SIGNIN_SUCCESS = 6;
+    private TextView login;
 
     public RegisterFragment() {
     }
@@ -109,30 +107,30 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
         if (connectivityManager != null)
             networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null) {
-            mFirebaseAuth = FirebaseAuth.getInstance();
+            //mFirebaseAuth = FirebaseAuth.getInstance();
+            firebaseAuthContent=new FirebaseAuthContent();
+            firebaseAuthContent.mAuth=FirebaseAuth.getInstance();
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = firebaseDatabase.getReference().child("users/PhoneUsers");
 
-            mCallbacks=new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                 @Override
                 public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-                    Log.d(LOG_TAG,"Verification Completed"+phoneAuthCredential);
-                    verificationStatus=false;
-                    updateUI(STATE_VERIFY_SUCCESS,phoneAuthCredential);
+                    Log.d(LOG_TAG, "Verification Completed" + phoneAuthCredential);
+                    verificationStatus = false;
+                    updateUI(STATE_VERIFY_SUCCESS, phoneAuthCredential);
                     signInWithPhoneAuthCredential(phoneAuthCredential);
                 }
 
                 @Override
                 public void onVerificationFailed(FirebaseException e) {
-                    Log.w(LOG_TAG,"Verification Failed",e);
-                    verificationStatus=false;
-                    if(e instanceof FirebaseAuthInvalidCredentialsException)
-                    {
-                        Toast.makeText(context,"Error:Verification Failed",Toast.LENGTH_SHORT).show();
+                    Log.w(LOG_TAG, "Verification Failed", e);
+                    verificationStatus = false;
+                    if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                        Toast.makeText(context, "Error:Verification Failed", Toast.LENGTH_SHORT).show();
                     }
-                    if(e instanceof FirebaseTooManyRequestsException)
-                    {
-                        Toast.makeText(context,"Error:Server Busy.Try Again after sometime",Toast.LENGTH_SHORT).show();
+                    if (e instanceof FirebaseTooManyRequestsException) {
+                        Toast.makeText(context, "Error:Server Busy.Try Again after sometime", Toast.LENGTH_SHORT).show();
                     }
                     updateUI(STATE_VERIFY_FAILED);
                 }
@@ -141,23 +139,19 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
                 public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                     super.onCodeSent(s, forceResendingToken);
                     //s above is the verificationID
-                    Log.d(LOG_TAG,"On code sent:"+s);
-                    mVerificationID=s;
-                    resendingToken=forceResendingToken;
+                    Log.d(LOG_TAG, "On code sent:" + s);
+                    mVerificationID = s;
+                    resendingToken = forceResendingToken;
                     updateUI(STATE_CODE_SENT);
                 }
             };
         }
     }
-
-    private void signOut() {
-        mFirebaseAuth.signOut();
-        updateUI(STATE_INITIALIZED);
-    }
-
     private void updateUI(int uiState) {
-        updateUI(uiState, mFirebaseAuth.getCurrentUser(), null);
+        //updateUI(uiState, mFirebaseAuth.getCurrentUser(), null);
+        updateUI(uiState, firebaseAuthContent.mAuth.getCurrentUser(), null);
     }
+
     private void updateUI(int uiState, FirebaseUser user) {
         updateUI(uiState, user, null);
     }
@@ -165,12 +159,9 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
     private void updateUI(int uiState, PhoneAuthCredential cred) {
         updateUI(uiState, null, cred);
     }
+
     private void updateUI(int uiState, FirebaseUser user, PhoneAuthCredential cred) {
         switch (uiState) {
-            case STATE_INITIALIZED:
-                // Initialized state, show only the phone number field and start button
-                //This is the default state of RegisterFragment
-                break;
             case STATE_CODE_SENT:
                 // Code sent state, show the verification field, the
                 CodeSentLayout.setVisibility(View.VISIBLE);
@@ -178,14 +169,11 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
                 phoneCodeSentView.setText(phoneView.getText().toString());
                 break;
             case STATE_VERIFY_FAILED:
-                // Verification has failed, show all options
-                /*CodeSentLayout.setVisibility(View.VISIBLE);
-                signUpWidget.setVisibility(View.GONE);
-                */
+                // Verification has failed
                 break;
             case STATE_VERIFY_SUCCESS:
                 // Verification has succeeded, proceed to firebase sign in
-                Snackbar.make(getActivity().findViewById(R.id.framelayout),"Verification Succeeded",Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(getActivity().findViewById(R.id.framelayout), "Verification Succeeded", Snackbar.LENGTH_SHORT).show();
 
                 // Set the verification text based on the credential
                 if (cred != null) {
@@ -199,71 +187,36 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
                 break;
             case STATE_SIGNIN_FAILED:
                 // No-op, handled by sign-in check
-                Toast.makeText(context,"Sign In Failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Sign In Failed", Toast.LENGTH_SHORT).show();
                 break;
             case STATE_SIGNIN_SUCCESS:
                 // Np-op, handled by sign-in check
-                Toast.makeText(context,"Signed In",Toast.LENGTH_SHORT).show();
+                login.performClick();
                 break;
         }
-
-        /*if (user == null) {
-            // Signed out
-            mPhoneNumberViews.setVisibility(View.VISIBLE);
-            mSignedInViews.setVisibility(View.GONE);
-
-            mStatusText.setText(R.string.signed_out);
-        } else {
-            // Signed in
-            mPhoneNumberViews.setVisibility(View.GONE);
-            mSignedInViews.setVisibility(View.VISIBLE);
-
-            enableViews(mPhoneNumberField, mVerificationField);
-            mPhoneNumberField.setText(null);
-            mVerificationField.setText(null);
-
-            mStatusText.setText(R.string.signed_in);
-            mDetailText.setText(getString(R.string.firebase_status_fmt, user.getUid()));
-        }*/
     }
 
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential phoneAuthCredential)
-    {
-        /////////////////////////////////////////////////////////////Remaining..i have to copy more code here
-        mFirebaseAuth
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential phoneAuthCredential) {
+        //mFirebaseAuth
+        firebaseAuthContent.mAuth
                 .signInWithCredential(phoneAuthCredential)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
-                        {
-                            Log.d(LOG_TAG,"Sign In with credential success!!");
-                            FirebaseUser firebaseUser=task.getResult().getUser();
-                            updateUI(STATE_SIGNIN_SUCCESS,firebaseUser);
-                        }
-                        else
-                        {
-                            Log.w(LOG_TAG,"SignInFailure",task.getException());
-                            if(task.getException() instanceof FirebaseAuthInvalidCredentialsException)
-                            {
-                                Toast.makeText(context,"Invalid Code!!",Toast.LENGTH_SHORT).show();
+                        if (task.isSuccessful()) {
+                            Log.d(LOG_TAG, "Sign In with credential success!!");
+                            FirebaseUser firebaseUser = task.getResult().getUser();
+                            updateUI(STATE_SIGNIN_SUCCESS, firebaseUser);
+                        } else {
+                            Log.w(LOG_TAG, "SignInFailure", task.getException());
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                Toast.makeText(context, "Invalid Code!!", Toast.LENGTH_SHORT).show();
                             }
                             updateUI(STATE_SIGNIN_FAILED);
                         }
                     }
-        });
+                });
     }
-    /*@Override
-    public void onPause() {
-        super.onPause();
-        mFirebaseAuth.removeAuthStateListener(authStateListener);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mFirebaseAuth.addAuthStateListener(authStateListener);
-    }*/
 
     private void Instantiator() {
         Items.add(new ItemMap(R.id.firstName, R.id.firstNameRequired));
@@ -287,22 +240,24 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
                 mCallbacks,         // OnVerificationStateChangedCallbacks
                 token);             // ForceResendingToken from callbacks
     }
+
     private void verifyPhoneNumberWithCode(String verificationId, String code) {
         // [START verify_with_code]
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         // [END verify_with_code]
         signInWithPhoneAuthCredential(credential);
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View itemView = inflater.inflate(R.layout.fragment_register, container, false);
 
-        CodeSentLayout=itemView.findViewById(R.id.code_sent_layout);
-        mVerificationField=itemView.findViewById(R.id.code_sent_verification);
-        phoneCodeSentView=itemView.findViewById(R.id.phone_code_sent);
-        resendButton=itemView.findViewById(R.id.resend_button);
-        verifyButton=itemView.findViewById(R.id.verify_button);
+        CodeSentLayout = itemView.findViewById(R.id.code_sent_layout);
+        mVerificationField = itemView.findViewById(R.id.code_sent_verification);
+        phoneCodeSentView = itemView.findViewById(R.id.phone_code_sent);
+        resendButton = itemView.findViewById(R.id.resend_button);
+        verifyButton = itemView.findViewById(R.id.verify_button);
 
         signUpWidget = itemView.findViewById(R.id.signUpWidget);
         retryButton = itemView.findViewById(R.id.retry);
@@ -316,7 +271,7 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
         MentorButton = itemView.findViewById(R.id.mentor);
         StudentButton = itemView.findViewById(R.id.student);
 
-        TextView login = itemView.findViewById(R.id.login);
+        login = itemView.findViewById(R.id.login);
 
         login.setText(Html.fromHtml("Already have an Account ? <u>Login</u>"));
         login.setOnClickListener(flipFragment);
@@ -350,7 +305,7 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
     }
 
     private void startPhoneVerification(String phoneNumber) {
-        Log.e(LOG_TAG,phoneNumber);
+        //Log.e(LOG_TAG,phoneNumber);
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
                 60,                 // Timeout duration
@@ -466,9 +421,10 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
 
         });
     }
-    private String createPhoneNumber(String ph){
-        String s="+91";
-        s=s.concat(ph);
+
+    private String createPhoneNumber(String ph) {
+        String s = "+91";
+        s = s.concat(ph);
         return s;
     }
 
@@ -550,15 +506,15 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
             case R.id.verify_button:
                 String code = mVerificationField.getText().toString();
                 if (TextUtils.isEmpty(code)) {
-                    Toast.makeText(context,"Field can not be empty!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Field can not be empty!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 verifyPhoneNumberWithCode(mVerificationID, code);
                 break;
             case R.id.resend_button:
-                EditText phoneText=getActivity().findViewById(R.id.phone_code_sent);
-                String phnoWithCountryCode=createPhoneNumber(phoneText.getText().toString());
+                EditText phoneText = getActivity().findViewById(R.id.phone_code_sent);
+                String phnoWithCountryCode = createPhoneNumber(phoneText.getText().toString());
                 resendVerificationCode(phnoWithCountryCode, resendingToken);
                 break;
             /*case R.id.sign_out_button:
@@ -566,6 +522,7 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
                 break;*/
         }
     }
+
     private class ItemMap {
         private int ID;
         private int errID;
