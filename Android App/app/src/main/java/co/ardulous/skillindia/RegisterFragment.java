@@ -336,7 +336,7 @@ public class RegisterFragment extends android.app.Fragment implements View.OnCli
             password = AESCrypt.encrypt(password);
             PhoneUsers user = new PhoneUsers(fname, lname, phno, password, registrationType);
             databaseReference.child(phno).setValue(user);
-            preEntranceValidator.child(phno).setValue("1");//1 implies user is logged in
+            preEntranceValidator.child(phno).push().setValue("1");
         } catch (Exception e) {
             Log.e("RegisterFragment", e.toString());
             Toast.makeText(getActivity(), "Some unexpected error occurred!", Toast.LENGTH_SHORT).show();
